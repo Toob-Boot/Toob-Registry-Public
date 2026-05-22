@@ -1,0 +1,6 @@
+{
+    "name": "baremetal",
+    "author": "toob-core-team",
+    "version": "1.0.0",
+    "description": "Baremetal Integration Hooks"
+}

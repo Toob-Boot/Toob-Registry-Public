@@ -1,0 +1,84 @@
+{
+    "chip_family": "esp32-c6",
+    "flash": {
+        "size": 4194304,
+        "write_alignment": 4,
+        "app_alignment": 65536,
+        "xip_base": "0x42000000",
+        "regions": [
+            {
+                "base": 0,
+                "type": "reserved",
+                "size": 262144,
+                "description": "Derived from scan: skipped"
+            },
+            {
+                "base": 262144,
+                "type": "writable",
+                "sector_size": 4096,
+                "count": 960
+            }
+        ]
+    },
+    "crypto_capabilities": {
+        "hw_aes": true,
+        "hw_ed25519": false,
+        "hw_rng": true,
+        "hw_sha256": true,
+        "pka_present": true,
+        "arena_size": 2048
+    },
+    "multi_core": {
+        "coprocessors": [
+            {
+                "app_alignment_bytes": null,
+                "flash_base": null,
+                "name": "lp_core"
+            }
+        ],
+        "ipc_mechanism": "shared_ram",
+        "is_multi_core": true
+    },
+    "memory": {
+        "ram_base": "0x40800000",
+        "ram_size": "0x8000"
+    },
+    "registers": {
+        "uart0_base": "0x60000000",
+        "systimer_base": "0x6000A000",
+        "flash_xip_base": "0x42000000",
+        "timg0_wdt_base": "0x60008000",
+        "timg1_wdt_base": "0x60009000",
+        "lp_wdt_base": "0x600B1C00",
+        "pmu_base": "0x600B0000",
+        "rtc_ram_base": "0x50000000",
+        "rng_data_reg": "0x60026000",
+        "efuse_base": "0x600B0800",
+        "rom_ptr_flash_erase": "0x40000144",
+        "rom_ptr_flash_write": "0x4000014c",
+        "rom_ptr_flash_read": "0x40000150",
+        "rom_ptr_flash_unlock": "0x40000154"
+    },
+    "constants": {
+        "cpu_freq_hz": 160000000,
+        "uart_sclk_freq": 40000000,
+        "uart_tx_fifo_size": 128,
+        "flash_erased_byte": 255,
+        "val_wdt_unlock": "0x50D83AA1",
+        "has_swd": 1,
+        "rst_poweron": 1,
+        "rst_sw_sys": 3,
+        "rst_deepsleep": 5,
+        "rst_tg0wdt": 7,
+        "rst_tg1wdt": 8,
+        "rst_rtcwdt_sys": 9,
+        "rst_tg0wdt_cpu": 11,
+        "rst_sw_cpu": 12,
+        "rst_rtcwdt_cpu": 13,
+        "rst_brownout": 15,
+        "rst_rtcwdt_rtc": 16,
+        "rst_swd": 18,
+        "rst_cause_mask": "0x1F",
+        "rst_cause_offset": "0x0410"
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "name": "ml_dsa_65",
+    "author": "toob-core-team",
+    "version": "0.2.0",
+    "description": "ML-DSA-65 Post-Quantum Signature Verification (Stub)",
+    "category": [
+        "pqc"
+    ],
+    "license": "Apache-2.0",
+    "min_core_sdk": "core/v0.0.1",
+    "wrapper": "crypto_pqc.c",
+    "upstream_sources": [
+        "ml_dsa_65.c"
+    ],
+    "cflags": [
+        "-O3",
+        "-fno-strict-aliasing"
+    ],
+    "footprint": {
+        "flash_estimate_bytes": 0,
+        "ram_estimate_bytes": 0
+    }
+}

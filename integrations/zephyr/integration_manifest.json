@@ -1,0 +1,6 @@
+{
+    "name": "zephyr",
+    "author": "toob-core-team",
+    "version": "1.0.0",
+    "description": "Zephyr RTOS Integration Hooks"
+}

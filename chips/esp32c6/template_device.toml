@@ -1,0 +1,35 @@
+name = "TestDevice"
+version = "v1.0.0"
+
+[device]
+chip = "esp32c6"
+
+[build]
+compiler = "riscv32-esp-elf"
+core_sdk = "latest"
+registry = "https://github.com/toob-boot/toob-registry"
+
+[driver_config]
+uart_baudrate = 115200
+
+[partitions]
+stage0_size = 32768        # 32 KB
+stage1_size = 65536        # 64 KB (Accepted 55KB footprint)
+app_size = 393216          # 384 KB
+recovery_size = 131072     # 128 KB
+netcore_size = 65536       # 64 KB
+enable_deltas = true       # Force Scratch Slot Generation
+wal_sectors = 4            # Number of sectors for the Write-Ahead Log
+
+[boot_config]
+max_retries = 3
+max_recovery_retries = 5
+edge_unattended_mode = true
+backoff_base_s = 10
+wdt_timeout_ms = 5000
+
+# [crypto]
+# backend = "monocypher"    # Override default crypto backend
+# hash = "monocypher"       # Override default hash algorithm
+# pqc = ""                  # Enable post-quantum (e.g., "ml_dsa_65")
+

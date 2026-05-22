@@ -1,0 +1,210 @@
+{
+    "format_version": 1,
+    "registry_version": "v1.2.1",
+    "ecosystem": {
+        "cli": [
+            "v0.7.0",
+            "v0.6.1"
+        ],
+        "core_sdk": [
+            "v0.0.1"
+        ],
+        "compiler": [
+            "v1.1.16",
+            "v1.1.15"
+        ]
+    },
+    "chips": {
+        "esp32c6": {
+            "name": "esp32c6",
+            "author": "toob-core-team",
+            "arch": "riscv32",
+            "compiler_prefix": "riscv32-esp-elf-",
+            "description": "Espressif ESP32-C6 (RISC-V, 4MB Flash, WiFi 6, BLE 5)",
+            "version": "1.3.1",
+            "path": "chips/esp32c6",
+            "verified": false,
+            "sources": {
+                "startup": "startup.c",
+                "platform": "chip_platform.c",
+                "config": "chip_config.h",
+                "linker": "esp32c6_stage1.ld",
+                "hardware": "hardware.json",
+                "drivers": [
+                    "drivers/uart/esp_uart_v1/console.c",
+                    "drivers/flash/esp_rom_spi/flash.c",
+                    "drivers/wdt/esp_rwdt_with_swd/wdt.c",
+                    "drivers/rtc/esp_rtc_mem/confirm.c",
+                    "drivers/clock/esp_systimer/reset_reason.c"
+                ],
+                "extra": [
+                    "mock_efuse.c"
+                ]
+            },
+            "includes": [
+                "soc/esp/include"
+            ],
+            "crypto": {
+                "backend": "monocypher",
+                "hash": "monocypher"
+            }
+        }
+    },
+    "toolchains": {
+        "riscv32-esp-elf": {
+            "path": "toolchains/riscv32-esp-elf",
+            "author": "espressif",
+            "version": "1.0.1",
+            "upstream_version": "13.2.0_20230928",
+            "license": "GPL-3.0-with-GCC-exception",
+            "urls": {
+                "darwin_amd64": "https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/riscv32-esp-elf-13.2.0_20230928-x86_64-apple-darwin.tar.xz",
+                "darwin_arm64": "https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/riscv32-esp-elf-13.2.0_20230928-aarch64-apple-darwin.tar.xz",
+                "linux_amd64": "https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/riscv32-esp-elf-13.2.0_20230928-x86_64-linux-gnu.tar.xz",
+                "windows_amd64": "https://github.com/espressif/crosstool-NG/releases/download/esp-13.2.0_20230928/riscv32-esp-elf-13.2.0_20230928-x86_64-w64-mingw32.zip"
+            },
+            "sha256": {
+                "darwin_amd64": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "darwin_arm64": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "linux_amd64": "782feefe354500c5f968e8c91959651be3bdbbd7ae8a17affcee2b1bffcaad89",
+                "windows_amd64": "1300a54505dc964fa9104482737152e669f4d880efc1d54057378d9e6910ae1e"
+            }
+        }
+    },
+    "archs": {
+        "riscv32": {
+            "name": "riscv32",
+            "author": "toob-core-team",
+            "path": "arch/riscv32",
+            "version": "1.0.0",
+            "description": "RISC-V 32-bit Architecture Support"
+        }
+    },
+    "drivers": {
+        "esp_rom_spi": {
+            "name": "esp_rom_spi",
+            "author": "toob-core-team",
+            "path": "drivers/flash/esp_rom_spi",
+            "version": "1.0.0",
+            "description": "ESP32 SPI Flash Driver via ROM pointers",
+            "category": "flash"
+        },
+        "esp_rtc_mem": {
+            "name": "esp_rtc_mem",
+            "author": "toob-core-team",
+            "path": "drivers/rtc/esp_rtc_mem",
+            "version": "1.0.0",
+            "description": "ESP32 RTC LP_RAM Confirm Nonce Storage",
+            "category": "rtc"
+        },
+        "esp_rwdt_with_swd": {
+            "name": "esp_rwdt_with_swd",
+            "author": "toob-core-team",
+            "path": "drivers/wdt/esp_rwdt_with_swd",
+            "version": "1.0.0",
+            "description": "ESP32 Regular Watchdog Timer (TIMG) with SWD sterilization",
+            "category": "wdt"
+        },
+        "esp_systimer": {
+            "name": "esp_systimer",
+            "author": "toob-core-team",
+            "path": "drivers/clock/esp_systimer",
+            "version": "1.0.0",
+            "description": "ESP32 System Reset Reason via RTC_CNTL",
+            "category": "clock"
+        },
+        "esp_uart_v1": {
+            "name": "esp_uart_v1",
+            "author": "toob-core-team",
+            "path": "drivers/uart/esp_uart_v1",
+            "version": "1.0.0",
+            "description": "ESP32 UART0 Console Driver",
+            "category": "uart"
+        }
+    },
+    "crypto": {
+        "ml_dsa_65": {
+            "name": "ml_dsa_65",
+            "author": "toob-core-team",
+            "path": "crypto/pqc/ml_dsa_65",
+            "version": "0.2.0",
+            "description": "ML-DSA-65 Post-Quantum Signature Verification (Stub)",
+            "category": [
+                "pqc"
+            ],
+            "license": "Apache-2.0",
+            "wrapper": "crypto_pqc.c",
+            "upstream_sources": [
+                "ml_dsa_65.c"
+            ],
+            "cflags": [
+                "-O3",
+                "-fno-strict-aliasing"
+            ],
+            "min_core_sdk": "core/v0.0.1"
+        },
+        "monocypher": {
+            "name": "monocypher",
+            "author": "toob-core-team",
+            "path": "crypto/backend/monocypher",
+            "version": "1.2.1",
+            "description": "Ed25519 Signature Verification + SHA-256 Hashing (Monocypher 4.x Software)",
+            "category": [
+                "backend",
+                "hash"
+            ],
+            "license": "BSD-2-Clause",
+            "wrapper": "crypto_monocypher.c",
+            "upstream_sources": [
+                "monocypher.c",
+                "monocypher-ed25519.c",
+                "sha256.c"
+            ],
+            "cflags": [
+                "-O3"
+            ],
+            "min_core_sdk": "core/v0.0.1"
+        },
+        "sha256_sw": {
+            "name": "sha256_sw",
+            "author": "toob-core-team",
+            "path": "crypto/hash/sha256_sw",
+            "version": "1.1.0",
+            "description": "Standalone Software SHA-256 Hash (Brad Conte implementation)",
+            "category": [
+                "hash"
+            ],
+            "license": "Public Domain",
+            "upstream_sources": [
+                "sha256.c"
+            ],
+            "cflags": [
+                "-O3"
+            ],
+            "min_core_sdk": "core/v0.0.1"
+        }
+    },
+    "integrations": {
+        "baremetal": {
+            "name": "baremetal",
+            "author": "toob-core-team",
+            "path": "integrations/baremetal",
+            "version": "1.0.0",
+            "description": "Baremetal Integration Hooks"
+        },
+        "espidf": {
+            "name": "espidf",
+            "author": "toob-core-team",
+            "path": "integrations/espidf",
+            "version": "1.0.0",
+            "description": "ESP-IDF Integration Hooks"
+        },
+        "zephyr": {
+            "name": "zephyr",
+            "author": "toob-core-team",
+            "path": "integrations/zephyr",
+            "version": "1.0.0",
+            "description": "Zephyr RTOS Integration Hooks"
+        }
+    }
+}

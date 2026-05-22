@@ -1,0 +1,6 @@
+{
+    "name": "espidf",
+    "author": "toob-core-team",
+    "version": "1.0.0",
+    "description": "ESP-IDF Integration Hooks"
+}

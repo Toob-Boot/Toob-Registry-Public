@@ -1,0 +1,6 @@
+{
+    "name": "riscv32",
+    "author": "toob-core-team",
+    "version": "1.0.0",
+    "description": "RISC-V 32-bit Architecture Support"
+}

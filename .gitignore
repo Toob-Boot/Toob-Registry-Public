@@ -1,0 +1,26 @@
+# Build artifacts
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Internal tooling (not part of public mirror)
+scripts/
+api/
+go.mod
+go.sum
+docs/
+version_index.json

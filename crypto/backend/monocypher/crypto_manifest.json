@@ -1,0 +1,25 @@
+{
+    "name": "monocypher",
+    "author": "toob-core-team",
+    "version": "1.2.1",
+    "description": "Ed25519 Signature Verification + SHA-256 Hashing (Monocypher 4.x Software)",
+    "category": [
+        "backend",
+        "hash"
+    ],
+    "license": "BSD-2-Clause",
+    "min_core_sdk": "core/v0.0.1",
+    "wrapper": "crypto_monocypher.c",
+    "upstream_sources": [
+        "monocypher.c",
+        "monocypher-ed25519.c",
+        "sha256.c"
+    ],
+    "cflags": [
+        "-O3"
+    ],
+    "footprint": {
+        "flash_estimate_bytes": 28000,
+        "ram_estimate_bytes": 128
+    }
+}

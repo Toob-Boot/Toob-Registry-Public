@@ -1,0 +1,22 @@
+{
+    "name": "sha256_sw",
+    "author": "toob-core-team",
+    "version": "1.1.0",
+    "description": "Standalone Software SHA-256 Hash (Brad Conte implementation)",
+    "category": [
+        "hash"
+    ],
+    "license": "Public Domain",
+    "min_core_sdk": "core/v0.0.1",
+    "wrapper": null,
+    "upstream_sources": [
+        "sha256.c"
+    ],
+    "cflags": [
+        "-O3"
+    ],
+    "footprint": {
+        "flash_estimate_bytes": 5600,
+        "ram_estimate_bytes": 128
+    }
+}
