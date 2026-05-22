@@ -1,0 +1,100 @@
+# ==============================================================================
+# PR Validation Dispatcher
+# ==============================================================================
+#
+# Lightweight workflow that runs on community PRs. It does NOT execute any
+# untrusted code. It only:
+#   1. Validates the PR only touches allowed content directories
+#   2. Dispatches a 'community_pr' event to the private Toob-Registry
+#      for full validation in a hardened environment
+#
+# SECURITY:
+# - Trigger: 'pull_request' (NOT 'pull_request_target')
+#   → Runs in the fork's context with READ-ONLY permissions
+#   → Cannot access repo secrets (DISPATCH_TOKEN is only available
+#     for PRs from branches in this repo, not from forks)
+# - For fork PRs: the dispatch step is skipped. A maintainer must
+#   manually trigger validation via '/validate' comment or by
+#   pushing the PR branch to the main repo.
+# - No caching, no artifacts, no network access beyond GitHub API
+# ==============================================================================
+
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'chips/**'
+      - 'drivers/**'
+      - 'crypto/**'
+      - 'arch/**'
+      - 'soc/**'
+      - 'toolchains/**'
+      - 'integrations/**'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  gate-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check for forbidden paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Fetch list of changed files in the PR
+          FILES=$(gh api "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" \
+            --jq '.[].filename' 2>/dev/null || echo "")
+
+          FORBIDDEN=false
+          while IFS= read -r file; do
+            case "$file" in
+              chips/*|drivers/*|crypto/*|arch/*|soc/*|toolchains/*|integrations/*)
+                ;; # Allowed
+              registry.json|compatibility_matrix.json)
+                echo "::error::$file is auto-generated and must not be edited manually."
+                FORBIDDEN=true
+                ;;
+              *)
+                echo "::error::$file is outside allowed content directories."
+                FORBIDDEN=true
+                ;;
+            esac
+          done <<< "$FILES"
+
+          if [ "$FORBIDDEN" = "true" ]; then
+            echo "::error::PR contains changes to protected paths. Only chips/, drivers/, crypto/, arch/, soc/, toolchains/, and integrations/ may be modified."
+            exit 1
+          fi
+
+          echo "All changed files are in allowed directories."
+
+      # Dispatch to private repo for full validation (only for non-fork PRs)
+      - name: Dispatch validation
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::Skipping dispatch (no token available for fork PRs)"
+            exit 0
+          fi
+
+          curl -fsSL -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/Toob-Boot/Toob-Registry/dispatches" \
+            -d '{
+              "event_type": "community_pr",
+              "client_payload": {
+                "pr_number": ${{ github.event.pull_request.number }},
+                "head_sha": "${{ github.event.pull_request.head.sha }}",
+                "head_ref": "${{ github.event.pull_request.head.ref }}"
+              }
+            }'
+
+          echo "Validation dispatched to internal pipeline."
